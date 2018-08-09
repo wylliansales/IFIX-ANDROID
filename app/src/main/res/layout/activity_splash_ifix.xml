@@ -6,11 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="173dp"
-        android:layout_height="238dp"
-        app:srcCompat="@drawable/logo_ifix"
-        tools:layout_editor_absoluteX="119dp"
-        tools:layout_editor_absoluteY="132dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="173dp"
+            android:layout_height="238dp"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/logo_ifix"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="164dp" />
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

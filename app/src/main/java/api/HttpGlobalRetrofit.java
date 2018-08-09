@@ -30,7 +30,7 @@ public class HttpGlobalRetrofit {
 
     private OkHttpClient getInterceptor() {
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new HttpInterceptor(DownloadFile.token))
+               // .addInterceptor(new HttpInterceptor(DownloadFile.token))
                 .build();
         return client;
     }
