@@ -141,8 +141,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Tentar logar na conta do usuário.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * Se houver erros de formulário (e-mail inválido, campos ausentes, etc.), o
+     * erros são apresentados e nenhuma tentativa de login real é feita.
      */
     private void attemptLogin() {
         if (mAuthTask != null) {
