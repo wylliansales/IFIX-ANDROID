@@ -93,6 +93,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        Button button_create_user = (Button) findViewById(R.id.button_create_user);
+        button_create_user.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void populateAutoComplete() {

@@ -1,5 +1,6 @@
 package br.com.ifix.ifix;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,8 +29,12 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent i = new Intent(HomeActivity.this, NovaSolicitacaoActivity.class);
+                startActivity(i);
+
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
 
@@ -80,18 +86,19 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_solicitacoes) {
+            Toast.makeText(getApplicationContext(),
+                    "Carregar fragmento de solicitações", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_abertos) {
+            Toast.makeText(getApplicationContext(),
+                    "Carregar fragmento de Solicitações Abertas", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_em_andamento) {
+            Toast.makeText(getApplicationContext(),
+                    "Carregar fragmento de Solicitações em andamento", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_concluidos) {
+            Toast.makeText(getApplicationContext(),
+                    "Carregar fragmento de Solicitações Concluídas", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
