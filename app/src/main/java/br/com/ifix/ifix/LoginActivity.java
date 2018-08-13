@@ -3,6 +3,7 @@ package br.com.ifix.ifix;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -191,18 +192,23 @@ public class LoginActivity extends AppCompatActivity{
         if (cancel) {
             focusView.requestFocus();
         } else {
-            //showProgress(true);
            // mAuthTask = new UserLoginTask(email, password);
           //  mAuthTask.execute((Void) null);
           //  Intent i = new Intent(LoginActivity.this, HomeActivity.class);
            // startActivity(i);
           //  finish();
             this.generateToken();
+
         }
     }
 
     private void generateToken(){
         Log.d("d","iniciou");
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Autenticanto aplicação...");
+        progress.show();
+
+
         Credential credential1 =  new Credential(
                 getString(R.string.grant_type),
                 Integer.parseInt(getString(R.string.client_id)),
@@ -222,6 +228,7 @@ public class LoginActivity extends AppCompatActivity{
             public void onResponse(Call<Token> call, Response<Token> response) {
                 Token token = response.body();
                 Log.d("d", token.getAccess_token());
+                progress.dismiss();
             }
 
             @Override
@@ -233,7 +240,6 @@ public class LoginActivity extends AppCompatActivity{
         //return false;
     }
 
-
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
@@ -243,7 +249,6 @@ public class LoginActivity extends AppCompatActivity{
         //TODO: Replace this with your own logic
         return password.length() > 5;
     }
-
     /**
      * Shows the progress UI and hides the login form.
      */
