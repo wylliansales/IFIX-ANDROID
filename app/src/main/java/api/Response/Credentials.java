@@ -1,13 +1,13 @@
-package models;
+package api.Response;
 
-public class ApiClient {
+public class Credentials {
 
     private String grant_type;
     private int client_id;
     private String client_secret;
     private String scope;
 
-    public ApiClient(String grant_type, int client_id, String client_secret, String scope){
+    public Credentials(String grant_type, int client_id, String client_secret, String scope){
         this.grant_type = grant_type;
         this.client_id = client_id;
         this.client_secret = client_secret;

@@ -1,6 +1,6 @@
 package models;
 
-public class Token {
+public class TokenReq {
 
     private String token_type;
     private int expires_in;
