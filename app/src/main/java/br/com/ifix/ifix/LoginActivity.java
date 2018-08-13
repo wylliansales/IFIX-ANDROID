@@ -28,9 +28,11 @@ import java.io.IOException;
 import api.HttpGlobalRetrofit;
 import api.Response.Token;
 import api.deserializers.GlobalDes;
+import api.deserializers.TokenDes;
 import api.interfaces.UserInterface;
 import api.requests.Credential;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -200,7 +202,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void generateToken(){
-
+        Log.d("d","iniciou");
         Credential credential1 =  new Credential(
                 getString(R.string.grant_type),
                 Integer.parseInt(getString(R.string.client_id)),
@@ -209,21 +211,24 @@ public class LoginActivity extends AppCompatActivity{
                 this.mPasswordView.getText().toString(),
                 getString(R.string.scope));
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new GlobalDes(Token.class)).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new TokenDes()).create();
         HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(gson);
         UserInterface req = globalRetrofit.getRetrofit().create(UserInterface.class);
 
-        final Call<Token> generateToken = req.getToken(credential1);
+        Call<Token> generateToken = req.getToken(credential1);
 
-        try {
-            Response response = generateToken.execute();
-            Token token = (Token) response.body();
-            Toast.makeText(getApplicationContext(),
-                    token.getAccess_token(), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        generateToken.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                Token token = response.body();
+                Log.d("d", token.getAccess_token());
+            }
 
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Log.d("d", t.getMessage());
+            }
+        });
 
         //return false;
     }

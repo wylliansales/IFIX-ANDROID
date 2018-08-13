@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpGlobalRetrofit {
 
     private final Retrofit retrofit;
-    public static final String API_URL = "http://ifix-server.test/api/";
+    public static final String API_URL = "http://192.168.0.100:8000/api/";
 
     public HttpGlobalRetrofit(Gson gson) {
         retrofit = new Retrofit
@@ -30,7 +30,7 @@ public class HttpGlobalRetrofit {
 
     private OkHttpClient getInterceptor() {
         OkHttpClient client = new OkHttpClient.Builder()
-               // .addInterceptor(new HttpInterceptor(DownloadFile.token))
+                .addInterceptor(new HttpInterceptor(null))
                 .build();
         return client;
     }
