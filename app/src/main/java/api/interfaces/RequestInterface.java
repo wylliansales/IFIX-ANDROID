@@ -3,7 +3,7 @@ package api.interfaces;
 import java.util.List;
 import api.Response.Request;
 import api.Response.Status;
-import models.RequestReq;
+import api.requests.RequestReq;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

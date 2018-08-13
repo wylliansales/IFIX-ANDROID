@@ -1,6 +1,6 @@
-package models;
+package api.Response;
 
-public class TokenReq {
+public class Token {
 
     private String token_type;
     private int expires_in;

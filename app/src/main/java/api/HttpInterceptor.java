@@ -2,16 +2,16 @@ package api;
 
 import java.io.IOException;
 
-import models.TokenReq;
+import api.Response.Token;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class HttpInterceptor implements Interceptor {
 
-    private TokenReq token;
+    private Token token;
 
-    public HttpInterceptor(TokenReq token){
+    public HttpInterceptor(Token token){
         this.token = token;
     }
 

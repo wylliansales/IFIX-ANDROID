@@ -12,9 +12,11 @@ import api.exception.ValidationException;
 
 public class GlobalDes implements JsonDeserializer<Object>{
 
-    private Object object;
+    private Type typeResponse;
 
-
+    public GlobalDes(Type type) {
+        this.typeResponse = type;
+    }
 
     @Override
     public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -25,6 +27,6 @@ public class GlobalDes implements JsonDeserializer<Object>{
         } else if(json.getAsJsonObject().get("error") != null){
             return new Gson().fromJson(je, ValidationException.class);
         }
-        return je;
+        return new Gson().fromJson(je, this.typeResponse);
     }
 }

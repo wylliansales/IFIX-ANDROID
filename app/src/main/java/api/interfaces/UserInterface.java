@@ -1,7 +1,7 @@
 package api.interfaces;
 
-import api.Response.Credentials;
-import models.TokenReq;
+import api.requests.Credential;
+import api.Response.Token;
 import api.Response.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,7 +12,7 @@ import retrofit2.http.PUT;
 public interface UserInterface {
 
     @POST("oauth/token")
-    Call<TokenReq> getToken(@Body Credentials credentials);
+    Call<Token> getToken(@Body Credential credential);
 
     @POST("users")
     Call<User> addUser(@Body User user);

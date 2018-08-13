@@ -1,16 +1,20 @@
-package api.Response;
+package api.requests;
 
-public class Credentials {
+public class Credential {
 
     private String grant_type;
     private int client_id;
     private String client_secret;
+    private String username;
+    private String password;
     private String scope;
 
-    public Credentials(String grant_type, int client_id, String client_secret, String scope){
+    public Credential(String grant_type, int client_id, String client_secret, String username, String password, String scope){
         this.grant_type = grant_type;
         this.client_id = client_id;
         this.client_secret = client_secret;
+        this.username = username;
+        this.password = password;
         this.scope = scope;
     }
 
@@ -43,4 +47,11 @@ public class Credentials {
     }
 
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

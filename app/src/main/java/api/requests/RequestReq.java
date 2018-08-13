@@ -1,4 +1,4 @@
-package models;
+package api.requests;
 
 public class RequestReq {
 
