@@ -5,19 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,17 +22,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import api.HttpGlobalRetrofit;
 import api.Response.Token;
-import api.deserializers.GlobalDes;
 import api.deserializers.TokenDes;
 import api.interfaces.UserInterface;
-import api.requests.Credential;
+import api.requests.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +44,7 @@ public class LoginActivity extends AppCompatActivity{
     private View mLoginFormView;
 
     ProgressDialog dialog;
-    SharedPreferences user_credentials;
+//    SharedPreferences user_credentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +52,7 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.email);
 
-        user_credentials = getSharedPreferences("user_credentials", MODE_PRIVATE);
+//        user_credentials = getSharedPreferences("user_credentials", MODE_PRIVATE);
 
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -149,14 +139,13 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void generateToken(){
-        Log.d("d","iniciou");
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Autenticando aplicação...");
         dialog.setCancelable(false);
         dialog.show();
 
-        final Credential credential =  new Credential(
+        final ApiClient credential =  new ApiClient(
                 getString(R.string.grant_type),
                 Integer.parseInt(getString(R.string.client_id)),
                 getString(R.string.client_secret),
@@ -183,14 +172,17 @@ public class LoginActivity extends AppCompatActivity{
                     Token token = response.body();
 
                     if(token != null){
-                        SharedPreferences.Editor editor = user_credentials.edit();
-                        editor.putString("username", credential.getUsername());
-                        editor.putString("password", credential.getPassword());
-                        editor.putString("access_token", token.getAccess_token());
-                        GregorianCalendar hoje = new GregorianCalendar();
-                        hoje.setTime(new Date());
-                        hoje.add(Calendar.DAY_OF_MONTH, token.getExpires_in()/86400);
+//                        SharedPreferences.Editor editor = user_credentials.edit();
+//                        editor.putString("username", credential.getUsername());
+//                        editor.putString("password", credential.getPassword());
+//                        editor.putString("access_token", token.getAccess_token());
+//                        GregorianCalendar hoje = new GregorianCalendar();
+//                        hoje.setTime(new Date());
+//                        hoje.add(Calendar.DAY_OF_MONTH, token.getExpires_in()/86400);
                     }
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
 
                     Toast.makeText(getBaseContext(), "Token de acesso " + token.getExpires_in(), Toast.LENGTH_LONG).show();
                 } else {

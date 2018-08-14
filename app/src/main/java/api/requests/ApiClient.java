@@ -1,6 +1,6 @@
 package api.requests;
 
-public class Credential {
+public class ApiClient {
 
     private String grant_type;
     private int client_id;
@@ -9,7 +9,7 @@ public class Credential {
     private String password;
     private String scope;
 
-    public Credential(String grant_type, int client_id, String client_secret, String username, String password, String scope){
+    public ApiClient(String grant_type, int client_id, String client_secret, String username, String password, String scope){
         this.grant_type = grant_type;
         this.client_id = client_id;
         this.client_secret = client_secret;

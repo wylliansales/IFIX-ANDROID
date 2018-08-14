@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpGlobalRetrofit {
 
     private final Retrofit retrofit;
-    public static final String API_URL = "http://192.168.137.14:8000/api/";
+    public static final String API_URL = "https://app-serve.herokuapp.com/api/";
 
     public HttpGlobalRetrofit(Gson gson) {
         retrofit = new Retrofit

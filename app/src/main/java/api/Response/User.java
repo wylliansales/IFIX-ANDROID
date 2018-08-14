@@ -7,6 +7,7 @@ public class User {
     private int id;
     private String name;
     private String email;
+    private String password;
     private boolean activated;
     private String scopes;
     private Date create_at;
@@ -66,5 +67,13 @@ public class User {
 
     public void setUpdate_at(Date update_at) {
         this.update_at = update_at;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
