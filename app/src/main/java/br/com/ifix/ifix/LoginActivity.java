@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -26,6 +27,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import api.HttpGlobalRetrofit;
 import api.Response.Token;
@@ -42,34 +46,24 @@ import retrofit2.Response;
  */
 public class LoginActivity extends AppCompatActivity{
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-
 
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
     ProgressDialog dialog;
+    SharedPreferences user_credentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
-        //populateAutoComplete();
+
+        user_credentials = getSharedPreferences("user_credentials", MODE_PRIVATE);
+
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -111,9 +105,6 @@ public class LoginActivity extends AppCompatActivity{
      * erros são apresentados e nenhuma tentativa de login real é feita.
      */
     private void attemptLogin() {
-//        if (mAuthTask != null) {
-//            return;
-//        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -161,11 +152,11 @@ public class LoginActivity extends AppCompatActivity{
         Log.d("d","iniciou");
 
         dialog = new ProgressDialog(this);
-        dialog.setMessage("Autenticanto aplicação...");
+        dialog.setMessage("Autenticando aplicação...");
         dialog.setCancelable(false);
         dialog.show();
 
-        Credential credential =  new Credential(
+        final Credential credential =  new Credential(
                 getString(R.string.grant_type),
                 Integer.parseInt(getString(R.string.client_id)),
                 getString(R.string.client_secret),
@@ -174,7 +165,7 @@ public class LoginActivity extends AppCompatActivity{
                 getString(R.string.scope));
 
 
-       Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new TokenDes()).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new TokenDes()).create();
         HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(gson);
         UserInterface req = globalRetrofit.getRetrofit().create(UserInterface.class);
 
@@ -190,6 +181,17 @@ public class LoginActivity extends AppCompatActivity{
                 int code = response.code();
                 if(code == 200) {
                     Token token = response.body();
+
+                    if(token != null){
+                        SharedPreferences.Editor editor = user_credentials.edit();
+                        editor.putString("username", credential.getUsername());
+                        editor.putString("password", credential.getPassword());
+                        editor.putString("access_token", token.getAccess_token());
+                        GregorianCalendar hoje = new GregorianCalendar();
+                        hoje.setTime(new Date());
+                        hoje.add(Calendar.DAY_OF_MONTH, token.getExpires_in()/86400);
+                    }
+
                     Toast.makeText(getBaseContext(), "Token de acesso " + token.getExpires_in(), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Falha: " + String.valueOf(code), Toast.LENGTH_LONG).show();
