@@ -2,11 +2,8 @@ package br.com.ifix.ifix;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,6 +22,7 @@ import models.Credential;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tools.Notification;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -66,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                         getString(R.string.scope));
 
                 Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new TokenDes()).create();
-                HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(gson);
+                HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(getApplicationContext(), gson);
                 UserInterface req = globalRetrofit.getRetrofit().create(UserInterface.class);
 
                 Call<Token> generateToken = req.getToken(client);
@@ -86,17 +84,22 @@ public class SplashActivity extends AppCompatActivity {
 
                                     credential.setAccess_token(token.getAccess_token());
                                     credential.setExpires_in(expires.getTime());
-                                    //db.updateCredentials(credential);
+                                    boolean update =  db.updateCredentials(credential);
+                                    if(update){
+                                        Intent i = new Intent(SplashActivity.this, HomeActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    } else {
+                                        Notification.notify(getApplicationContext(),"Falha ao tentar atualizar o token", 0);
+                                    }
                                 }
+                            } else {
+                                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                                startActivity(i);
+                                finish();
                             }
                         } else {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getBaseContext(), "Falha ao tentar autenticar", Toast.LENGTH_LONG).show();
-                                }
-                            }, SPLASH_TIME_OUT);
-
+                            Notification.notify(getApplicationContext(),"Falha: " + String.valueOf(code), 0);
                             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                             startActivity(i);
                             finish();
@@ -105,13 +108,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getBaseContext(), "Error de conexão", Toast.LENGTH_LONG).show();
-                            }
-                        }, SPLASH_TIME_OUT);
-
+                        Notification.notify(getApplicationContext(),"Error de conexão", 0);
                         Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(i);
                         finish();
@@ -130,4 +127,5 @@ public class SplashActivity extends AppCompatActivity {
             }, SPLASH_TIME_OUT);
     }
 }
+
 }

@@ -34,14 +34,20 @@ public class DataBase {
         db.insert("credentials", null, values);
     }
 
-    public void updateCredentials(Credential credential){
+    public boolean updateCredentials(Credential credential){
         ContentValues values = new ContentValues();
         values.put("username", credential.getUsername());
         values.put("password", credential.getPassword());
         values.put("access_token", credential.getAccess_token());
         values.put("expires_in", credential.getExpires_in().toString());
 
-        db.update("credentials", values, "_id = ?", new String[]{""+ credential.get_id()});
+        try{
+            db.update("credentials", values, "_id = ?", new String[]{""+ credential.get_id()});
+        }catch (Exception e) {
+          return false;
+        }
+
+        return true;
     }
 
     public void deleteCredentials(Credential credential){
@@ -67,5 +73,4 @@ public class DataBase {
     public void destroy(){
         db.execSQL("delete from credentials");
     }
-
 }

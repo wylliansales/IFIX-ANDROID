@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,6 +37,7 @@ import models.Credential;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tools.Notification;
 
 /**
  * A login screen that offers login via email/password.
@@ -166,7 +165,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Token.class, new TokenDes()).create();
-        HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(gson);
+        HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(getApplicationContext(),gson);
         UserInterface req = globalRetrofit.getRetrofit().create(UserInterface.class);
 
         Call<Token> generateToken = req.getToken(client);
@@ -196,17 +195,19 @@ public class LoginActivity extends AppCompatActivity{
 
                             boolean save = saveCredential(cred);
                             if(save) {
-                                Toast.makeText(getBaseContext(), "Bem vindo :)", Toast.LENGTH_LONG).show();
+                                Notification.notify(getApplicationContext(),"Bem vindo :)", 0);
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(i);
                                 finish();
                             } else {
-                                Toast.makeText(getBaseContext(), "Não foi possível gravar credenciais", Toast.LENGTH_LONG).show();
+                                Notification.notify(getApplicationContext(),"Não foi possível gravar credenciais", 0);
                             }
                         }
+                    } else {
+                        Notification.notify(getApplicationContext(),"Holve uma falha, tente novamente", 0);
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Falha: " + String.valueOf(code), Toast.LENGTH_LONG).show();
+                    Notification.notify(getApplicationContext(),"Falha: " + String.valueOf(code), 0);
                 }
 
             }
