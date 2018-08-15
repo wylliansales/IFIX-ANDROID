@@ -10,8 +10,8 @@ public class User {
     private String password;
     private boolean activated;
     private String scopes;
-    private Date create_at;
-    private Date update_at;
+    private String create_at;
+    private String update_at;
 
     public int getId() {
         return id;
@@ -53,19 +53,19 @@ public class User {
         this.scopes = scopes;
     }
 
-    public Date getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(Date create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
     }
 
-    public Date getUpdate_at() {
+    public String getUpdate_at() {
         return update_at;
     }
 
-    public void setUpdate_at(Date update_at) {
+    public void setUpdate_at(String update_at) {
         this.update_at = update_at;
     }
 

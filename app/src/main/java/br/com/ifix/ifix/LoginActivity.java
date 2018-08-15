@@ -60,9 +60,6 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.email);
 
-//        user_credentials = getSharedPreferences("user_credentials", MODE_PRIVATE);
-
-
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

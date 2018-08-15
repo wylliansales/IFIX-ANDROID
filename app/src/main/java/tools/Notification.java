@@ -14,4 +14,5 @@ public class Notification {
             }
         }, SPLASH_TIME_OUT);
     }
+
 }
