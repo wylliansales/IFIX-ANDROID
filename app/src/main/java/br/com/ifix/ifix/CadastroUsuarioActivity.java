@@ -9,7 +9,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText nameView;
     private EditText emailView;
     private EditText passwordView;
-    private EditText
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
