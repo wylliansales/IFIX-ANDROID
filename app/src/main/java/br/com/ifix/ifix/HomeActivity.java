@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import DB.DataBase;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -99,6 +101,14 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_concluidos) {
             Toast.makeText(getApplicationContext(),
                     "Carregar fragmento de Solicitações Concluídas", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_edit_perfil) {
+
+        } else if (id == R.id.nav_logout) {
+            DataBase db = new DataBase(this);
+            db.destroy();
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

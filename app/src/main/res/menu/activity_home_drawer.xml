@@ -25,11 +25,11 @@
     <item android:title="Perfil">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_edit_perfil"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Alterar perfil" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Sair" />
         </menu>

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.Date;
+
 import models.Credential;
 
 public class DataBase {
@@ -21,7 +23,13 @@ public class DataBase {
         values.put("username", credential.getUsername());
         values.put("password", credential.getPassword());
         values.put("access_token", credential.getAccess_token());
-        values.put("expires_in", credential.getExpires_in());
+        values.put("expires_in", credential.getExpires_in().toString());
+
+        Credential cred = getCredentials();
+
+        if(cred.get_id() > 0) {
+            deleteCredentials(cred);
+        }
 
         db.insert("credentials", null, values);
     }
@@ -31,7 +39,7 @@ public class DataBase {
         values.put("username", credential.getUsername());
         values.put("password", credential.getPassword());
         values.put("access_token", credential.getAccess_token());
-        values.put("expires_in", credential.getExpires_in());
+        values.put("expires_in", credential.getExpires_in().toString());
 
         db.update("credentials", values, "_id = ?", new String[]{""+ credential.get_id()});
     }
@@ -51,9 +59,13 @@ public class DataBase {
             credential.setUsername(cursor.getString(1));
             credential.setPassword(cursor.getString(2));
             credential.setAccess_token(cursor.getString(3));
-            credential.setExpires_in(cursor.getString(4));
+            credential.setExpires_in(new Date(cursor.getString(4)));
         }
         return credential;
+    }
+
+    public void destroy(){
+        db.execSQL("delete from credentials");
     }
 
 }

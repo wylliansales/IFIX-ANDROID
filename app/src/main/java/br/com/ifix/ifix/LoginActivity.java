@@ -4,16 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,11 +25,17 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import DB.DataBase;
 import api.HttpGlobalRetrofit;
 import api.Response.Token;
 import api.deserializers.TokenDes;
 import api.interfaces.UserInterface;
 import api.requests.ApiClient;
+import models.Credential;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,6 +73,14 @@ public class LoginActivity extends AppCompatActivity{
                     return true;
                 }
                 return false;
+            }
+        });
+
+        mPasswordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
             }
         });
 
@@ -128,13 +145,7 @@ public class LoginActivity extends AppCompatActivity{
         if (cancel) {
             focusView.requestFocus();
         } else {
-           // mAuthTask = new UserLoginTask(email, password);
-          //  mAuthTask.execute((Void) null);
-          //  Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-           // startActivity(i);
-          //  finish();
             this.generateToken();
-
         }
     }
 
@@ -145,7 +156,7 @@ public class LoginActivity extends AppCompatActivity{
         dialog.setCancelable(false);
         dialog.show();
 
-        final ApiClient credential =  new ApiClient(
+        final ApiClient client =  new ApiClient(
                 getString(R.string.grant_type),
                 Integer.parseInt(getString(R.string.client_id)),
                 getString(R.string.client_secret),
@@ -158,7 +169,7 @@ public class LoginActivity extends AppCompatActivity{
         HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(gson);
         UserInterface req = globalRetrofit.getRetrofit().create(UserInterface.class);
 
-        Call<Token> generateToken = req.getToken(credential);
+        Call<Token> generateToken = req.getToken(client);
 
 
         generateToken.enqueue(new Callback<Token>() {
@@ -172,19 +183,28 @@ public class LoginActivity extends AppCompatActivity{
                     Token token = response.body();
 
                     if(token != null){
-//                        SharedPreferences.Editor editor = user_credentials.edit();
-//                        editor.putString("username", credential.getUsername());
-//                        editor.putString("password", credential.getPassword());
-//                        editor.putString("access_token", token.getAccess_token());
-//                        GregorianCalendar hoje = new GregorianCalendar();
-//                        hoje.setTime(new Date());
-//                        hoje.add(Calendar.DAY_OF_MONTH, token.getExpires_in()/86400);
-                    }
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
-                    finish();
+                        if(token.getAccess_token() != null && token.getExpires_in() > 0){
+                            GregorianCalendar hoje = new GregorianCalendar();
+                            hoje.setTime(new Date());
+                            hoje.add(Calendar.DAY_OF_MONTH, token.getExpires_in()/86400);
 
-                    Toast.makeText(getBaseContext(), "Token de acesso " + token.getExpires_in(), Toast.LENGTH_LONG).show();
+                            Credential cred = new Credential();
+                            cred.setAccess_token(token.getAccess_token());
+                            cred.setExpires_in(hoje.getTime());
+                            cred.setUsername(client.getUsername());
+                            cred.setPassword(client.getPassword());
+
+                            boolean save = saveCredential(cred);
+                            if(save) {
+                                Toast.makeText(getBaseContext(), "Bem vindo :)", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Toast.makeText(getBaseContext(), "Não foi possível gravar credenciais", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
                 } else {
                     Toast.makeText(getBaseContext(), "Falha: " + String.valueOf(code), Toast.LENGTH_LONG).show();
                 }
@@ -198,6 +218,16 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
         //return false;
+    }
+
+    private boolean saveCredential(Credential credential){
+        try{
+            DataBase db = new DataBase(this);
+            db.insertCredentials(credential);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     private boolean isEmailValid(String email) {
@@ -244,7 +274,6 @@ public class LoginActivity extends AppCompatActivity{
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
 
 }
 

@@ -1,12 +1,14 @@
 package models;
 
+import java.util.Date;
+
 public class Credential {
 
     private int _id;
     private String username;
     private String password;
     private String access_token;
-    private String expires_in;
+    private Date expires_in;
 
     public int get_id() {
         return _id;
@@ -40,11 +42,11 @@ public class Credential {
         this.access_token = access_token;
     }
 
-    public String getExpires_in() {
+    public Date getExpires_in() {
         return expires_in;
     }
 
-    public void setExpires_in(String expires_in) {
+    public void setExpires_in(Date expires_in) {
         this.expires_in = expires_in;
     }
 }
