@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,8 @@ import DB.DataBase;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +89,12 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment fragment = null;
         int id = item.getItemId();
 
         if (id == R.id.nav_solicitacoes) {
-            Toast.makeText(getApplicationContext(),
-                    "Carregar fragmento de solicitações", Toast.LENGTH_SHORT).show();
+           fragment = new SolicitacoesFragment();
+            getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.frame_home, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_abertos) {
             Toast.makeText(getApplicationContext(),
@@ -104,15 +108,21 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_edit_perfil) {
 
         } else if (id == R.id.nav_logout) {
-            DataBase db = new DataBase(this);
-            db.destroy();
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
+            logout();
         }
+
+       // getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.frame_home, fragment).addToBackStack(null).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout(){
+        DataBase db = new DataBase(this);
+        db.destroy();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
