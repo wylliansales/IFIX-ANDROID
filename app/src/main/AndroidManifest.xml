@@ -38,7 +38,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NovaSolicitacaoActivity" />
         <activity android:name=".CadastroUsuarioActivity" />
-        <activity android:name=".Login1Activity"></activity>
     </application>
 
 </manifest>

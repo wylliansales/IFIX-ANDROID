@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBCore extends SQLiteOpenHelper {
 
     private static final String NAME_DB = "ifix";
-    private static final int VERSAO_DB = 7;
+    private static final int VERSAO_DB = 5;
 
     public DBCore(Context ctx) {
         super(ctx, NAME_DB, null, VERSAO_DB);

@@ -13,7 +13,7 @@
     <string name="error_incorrect_password">Esta senha está incorreta</string>
     <string name="error_field_required">Este campo é obrigatório</string>
     <string name="permission_rationale">"As permissões de contatos são necessárias para fornecer conclusões de email."</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home"></string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -32,6 +32,7 @@
     <string name="text_usuario">Dados do usuário</string>
     <string name="user_name">Nome</string>
     <string name="user_password_confirmation">Confirme a senha</string>
+    <string name="action_login">Login</string>
 
     <string-array name="departments_array">
         <item>Mercury</item>
