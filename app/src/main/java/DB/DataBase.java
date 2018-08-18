@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -65,7 +66,8 @@ public class DataBase {
             credential.setUsername(cursor.getString(1));
             credential.setPassword(cursor.getString(2));
             credential.setAccess_token(cursor.getString(3));
-            credential.setExpires_in(new Date(cursor.getString(4)));
+            Log.d("gggggggg", cursor.getString(4));
+           // credential.setExpires_in(new Date(cursor.getString(4)));
         }
         return credential;
     }
