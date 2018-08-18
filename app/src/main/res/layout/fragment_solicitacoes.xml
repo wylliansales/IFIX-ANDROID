@@ -56,7 +56,6 @@
             app:cardCornerRadius="5dp"
             card_view:cardElevation="9dp"
             android:layout_marginRight="20dp"
-
             android:background="@drawable/round_border">
 
             <LinearLayout

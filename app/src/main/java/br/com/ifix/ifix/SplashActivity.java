@@ -28,19 +28,27 @@ public class SplashActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 3000;
     private DataBase db;
+    Credential credential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_ifix);
         db = new DataBase(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        credential = db.getCredentials();
         login();
     }
 
-
     private void login() {
-        final Credential credential = db.getCredentials();
+
         if(credential.getUsername() != null && credential.getAccess_token() != null) {
+            Notification.notify(getApplicationContext(),"Entrou no if", 0);
             GregorianCalendar hoje = new GregorianCalendar();
             hoje.setTime(new Date());
             GregorianCalendar expires = new GregorianCalendar();

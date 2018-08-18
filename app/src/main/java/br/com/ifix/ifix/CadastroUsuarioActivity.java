@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +42,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         mPpasswordView = (EditText) findViewById(R.id.user_password);
         mPasswordConfirmationView = (EditText) findViewById(R.id.user_password_confirmation);
 
-        Button createUserButton = (Button) findViewById(R.id.user_create_button);
+        TextView createUserButton = (TextView) findViewById(R.id.user_create_button);
         createUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
