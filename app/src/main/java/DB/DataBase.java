@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import models.Credential;
@@ -13,18 +15,19 @@ import models.Credential;
 public class DataBase {
 
     private SQLiteDatabase db;
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     public DataBase(Context context) {
         DBCore core = new DBCore(context);
         db = core.getWritableDatabase();
     }
 
-    public void insertCredentials(Credential credential){
+    public void insertCredentials(Credential credential) {
         ContentValues values = new ContentValues();
         values.put("username", credential.getUsername());
         values.put("password", credential.getPassword());
         values.put("access_token", credential.getAccess_token());
-        values.put("expires_in", credential.getExpires_in().toString());
+        values.put("expires_in", format.format(credential.getExpires_in()));
 
         Credential cred = getCredentials();
 
@@ -40,7 +43,7 @@ public class DataBase {
         values.put("username", credential.getUsername());
         values.put("password", credential.getPassword());
         values.put("access_token", credential.getAccess_token());
-        values.put("expires_in", credential.getExpires_in().toString());
+        values.put("expires_in", format.format(credential.getExpires_in()));
 
         try{
             db.update("credentials", values, "_id = ?", new String[]{""+ credential.get_id()});
@@ -66,8 +69,12 @@ public class DataBase {
             credential.setUsername(cursor.getString(1));
             credential.setPassword(cursor.getString(2));
             credential.setAccess_token(cursor.getString(3));
-            Log.d("gggggggg", cursor.getString(4));
-           // credential.setExpires_in(new Date(cursor.getString(4)));
+            try {
+                credential.setExpires_in(format.parse(cursor.getString(4)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
         return credential;
     }
