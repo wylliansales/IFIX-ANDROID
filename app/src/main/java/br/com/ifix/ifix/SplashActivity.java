@@ -48,7 +48,6 @@ public class SplashActivity extends AppCompatActivity {
     private void login() {
 
         if(credential.getUsername() != null && credential.getAccess_token() != null) {
-            Notification.notify(getApplicationContext(),"Entrou no if", 0);
             GregorianCalendar hoje = new GregorianCalendar();
             hoje.setTime(new Date());
             GregorianCalendar expires = new GregorianCalendar();
