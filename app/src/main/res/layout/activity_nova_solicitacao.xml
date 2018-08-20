@@ -108,7 +108,7 @@
                     </LinearLayout>
 
                         <customfonts.EditText_Roboto_Regular
-                            android:id="@+id/solicitacao_motivo"
+                            android:id="@+id/request_subject_matter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#00000000"
@@ -127,7 +127,7 @@
                     </LinearLayout>
 
                     <customfonts.EditText_Roboto_Regular
-                        android:id="@+id/solicitacao_descricao"
+                        android:id="@+id/request_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
@@ -147,7 +147,7 @@
 
 
                     <CheckBox
-                        android:id="@+id/solicitacao_notificacao"
+                        android:id="@+id/request_notify"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="   Notificar quando sofrer alterações"
@@ -155,7 +155,7 @@
                         android:layout_marginTop="10dp"/>
 
                     <customfonts.MyTextView_Roboto_Medium
-                        android:id="@+id/solicitacao_salvar"
+                        android:id="@+id/request_save"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Adicionar Solicitação"

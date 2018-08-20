@@ -3,6 +3,7 @@ package api.requests;
 public class RequestReq {
 
     private int department_id;
+    private int equipment_id;
     private int user_id;
     private String subject_matter;
     private String description;
@@ -37,5 +38,13 @@ public class RequestReq {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getEquipment_id() {
+        return equipment_id;
+    }
+
+    public void setEquipment_id(int equipment_id) {
+        this.equipment_id = equipment_id;
     }
 }

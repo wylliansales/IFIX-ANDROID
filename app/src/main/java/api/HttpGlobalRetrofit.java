@@ -51,7 +51,6 @@ public class HttpGlobalRetrofit {
     private String getToken() {
         DataBase db = new DataBase(this.ctx);
         Credential credential = db.getCredentials();
-
         return credential.getAccess_token() != null ? credential.getAccess_token() : "";
     }
 

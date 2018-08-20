@@ -59,7 +59,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         mPpasswordView.setError(null);
         mPasswordConfirmationView.setError(null);
 
-        //Amarzena os valores
+        //Armazena os valores
         String name                 = mNameView.getText().toString();
         String email                = mEmailView.getText().toString();
         String password             = mPpasswordView.getText().toString();
