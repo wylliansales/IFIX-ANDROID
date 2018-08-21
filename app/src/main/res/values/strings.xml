@@ -33,6 +33,7 @@
     <string name="user_name">Nome</string>
     <string name="user_password_confirmation">Confirme a senha</string>
     <string name="action_login">Login</string>
+    <string name="text_setor">Setor</string>
 
     <string-array name="departments_array">
         <item>Mercury</item>

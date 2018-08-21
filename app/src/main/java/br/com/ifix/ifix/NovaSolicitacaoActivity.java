@@ -25,8 +25,11 @@ import java.util.List;
 
 import api.HttpGlobalRetrofit;
 import api.Response.Department;
+import api.Response.Sector;
 import api.deserializers.DepartmentDes;
+import api.deserializers.SectorDes;
 import api.interfaces.DepartmentInterface;
+import api.interfaces.SectorInterface;
 import api.requests.RequestReq;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +38,12 @@ import retrofit2.Response;
 public class NovaSolicitacaoActivity extends AppCompatActivity {
 
     private Spinner deparments_spinners;
+    private Spinner sector_spinners;
     private Spinner equipments_spinners;
     private EditText subject_matter;
     private EditText description;
     private List<Department> departments;
+    private List<Sector> sectors;
 
     ProgressDialog dialog;
 
@@ -48,9 +53,10 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nova_solicitacao);
         setTitle("Nova Solicitação");
 
+        this.deparments_spinners = (Spinner) findViewById(R.id.deparments_spinner);
+        this.sector_spinners = (Spinner) findViewById(R.id.sector_spinner);
         this.equipments_spinners = (Spinner) findViewById(R.id.equipments_spinner);
 
-        this.deparments_spinners = (Spinner) findViewById(R.id.deparments_spinner);
 
         this.deparments_spinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("LongLogTag")
@@ -87,6 +93,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         searchDepartment();
+        searchSector();
     }
 
     private void createRequest() {
@@ -151,16 +158,33 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
                     if(departments != null && departments.size() > 0) {
                         setDeparments_spinners(departments);
                     }
-
                 }
-                Log.d("ggg>>>>>>>>>>>>>>>>>>", String.valueOf(response.code()));
             }
-
             @Override
             public void onFailure(Call<List<Department>> call, Throwable t) {
-                Log.d("ggg>>>>>>>>>>>>>>>>>>", "Erro na requisição");
-                Log.d("ggg>>>>>>>>>>>>>>>>>>", t.getMessage());
-                Log.d("ggg>>>>>>>>>>>>>>>>>>", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void searchSector(){
+        Gson gson = new GsonBuilder().registerTypeAdapter(Sector.class, new SectorDes()).create();
+        HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(getApplicationContext(), gson);
+        SectorInterface req = globalRetrofit.getRetrofit().create(SectorInterface.class);
+
+        Call<List<Sector>> getAllSectors = req.getAll();
+
+        getAllSectors.enqueue(new Callback<List<Sector>>() {
+            @Override
+            public void onResponse(Call<List<Sector>> call, Response<List<Sector>> response) {
+                if(response.code() == 200) {
+                    sectors = response.body();
+                    if((sectors != null) && (sectors.size() > 0)) {
+                        setSectors_spinners(sectors);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Sector>> call, Throwable t) {
             }
         });
     }
@@ -175,6 +199,18 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterOpcoes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, department_name);
         adapterOpcoes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.deparments_spinners.setAdapter(adapterOpcoes);
+    }
+
+    public void setSectors_spinners(List<Sector> sectors) {
+        List<String> sector_name = new ArrayList<>();
+
+        for (Sector sector: sectors) {
+            sector_name.add(sector.getName());
+        }
+
+        ArrayAdapter<String> adapterOpcoes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sector_name);
+        adapterOpcoes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.sector_spinners.setAdapter(adapterOpcoes);
     }
 
     public void setEquipments_spinners(List<String> equipments) {

@@ -83,6 +83,34 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@string/text_setor"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginRight="18dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@drawable/round_border">
+
+                        <Spinner
+                            android:id="@+id/sector_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="15dp"
+                            android:background="@drawable/spinner">
+
+                        </Spinner>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/text_equipment"
                         android:layout_marginTop="18dp"
                         android:layout_marginLeft="18dp"
