@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity{
     private EditText mPasswordView;
 
     ProgressDialog dialog;
-//    SharedPreferences user_credentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +198,8 @@ public class LoginActivity extends AppCompatActivity{
                     } else {
                         Notification.notify(getApplicationContext(),"Holve uma falha, tente novamente", 0);
                     }
+                } else if(code == 401) {
+                    Notification.notify(getApplicationContext(),"Dados incorretos", 0);
                 } else {
                     Notification.notify(getApplicationContext(),"Falha: " + String.valueOf(code), 0);
                 }
