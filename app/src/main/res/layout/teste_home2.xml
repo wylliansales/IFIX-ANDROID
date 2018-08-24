@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.ws.design.payment_methods.Payment_method">
 
@@ -12,21 +13,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#ffffff"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        card_view:cardCornerRadius="15dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="0.0px"
-        card_view:cardCornerRadius="15dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         card_view:cardElevation="10dp"
-        card_view:cardPreventCornerOverlap="false">
+        card_view:cardPreventCornerOverlap="false"
+        android:background="#ffffff">
 
         <LinearLayout
-            android:id="@+id/visa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/visa">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,11 +47,11 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/rightmark2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="15dp" />
+                    android:id="@+id/rightmark2"
+                    android:layout_marginRight="15dp"/>
 
             </LinearLayout>
 
@@ -64,23 +65,23 @@
             <customfonts.MyTextView_Roboto_Regular
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:paddingLeft="25dp"
                 android:text="8234"
+                android:layout_marginTop="5dp"
                 android:textSize="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
-                android:orientation="horizontal">
-
+                android:orientation="horizontal"
+                >
                 <custom_font.MyTextView_Roboto_Medium
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="2"
                     android:paddingLeft="25dp"
+                    android:layout_gravity="center"
                     android:text="Naguten Huu Yeen"
                     android:textSize="16dp" />
 
@@ -103,7 +104,9 @@
                     android:text="12/18"
                     android:textSize="16dp" />
 
+
             </LinearLayout>
+
 
         </LinearLayout>
 

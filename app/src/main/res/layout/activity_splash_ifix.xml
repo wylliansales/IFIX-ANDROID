@@ -8,28 +8,24 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="139dp"
+            android:layout_centerInParent="true"
             app:srcCompat="@drawable/logo_ifix" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal"
-            android:text="Iniciando aplicativo ..."
+            android:textSize="12dp"
             android:textColor="#454545"
-            android:textSize="12dp" />
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:text="Iniciando aplicativo ..." />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -38,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="133dp" />
+            android:layout_marginBottom="114dp" />
     </RelativeLayout>
 
 
