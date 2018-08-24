@@ -8,6 +8,10 @@
     tools:context=".HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
-
+    <FrameLayout
+        android:id="@+id/frame_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fab"></FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

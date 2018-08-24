@@ -65,7 +65,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
             this.deparments_spinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                    department_id = departments.get(position).getId();
                 }
 
                 @Override
