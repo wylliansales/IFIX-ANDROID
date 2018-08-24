@@ -2,6 +2,7 @@ package br.com.ifix.ifix;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,17 +27,21 @@ import java.util.List;
 import api.HttpGlobalRetrofit;
 import api.Response.Department;
 import api.Response.Equipment;
+import api.Response.Message;
+import api.Response.Request;
 import api.Response.Sector;
 import api.deserializers.DepartmentDes;
 import api.deserializers.EquipmentDes;
 import api.deserializers.SectorDes;
 import api.interfaces.DepartmentInterface;
 import api.interfaces.EquipmentInterface;
+import api.interfaces.RequestInterface;
 import api.interfaces.SectorInterface;
 import api.requests.RequestReq;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tools.Notification;
 
 public class NovaSolicitacaoActivity extends AppCompatActivity {
 
@@ -52,7 +57,6 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
     ProgressDialog dialog;
 
     private int department_id;
-    private int sector_id;
     private int equipment_id;
 
 
@@ -69,7 +73,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.departments_spinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                department_id = departments.get(position).getId();
             }
 
             @Override
@@ -81,7 +85,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.equipments_spinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                equipment_id = equipments.get(position).getId();
             }
 
             @Override
@@ -95,8 +99,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("id sector >>>>>>>>>>>>>>>", String.valueOf(sectors.get(position-1).getId()));
-                searchEquipmentsBySector(sectors.get(position-1).getId());
+                searchEquipmentsBySector(sectors.get(position).getId());
             }
 
             @Override
@@ -109,7 +112,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // createRequest();
+               createRequest();
             }
         });
 
@@ -129,8 +132,8 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.description.setError(null);
 
         //Armazena os valores
-        int department_id = getDepartmentSelect();
-        int equipment_id = getEquipmentSelect();
+        int department = department_id;
+        int equipment = equipment_id;
         String subject_matter = this.subject_matter.getText().toString();
         String description = this.description.getText().toString();
 
@@ -162,11 +165,40 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         }
     }
 
-    private void addRequest(RequestReq req){
-        Log.d("SOLICITA>>>>>>>>>>>>>>>", String.valueOf(req.getDepartment_id()));
-        Log.d("SOLICITA>>>>>>>>>>>>>>>", String.valueOf(req.getEquipment_id()));
-        Log.d("SOLICITA>>>>>>>>>>>>>>>", req.getSubject_matter());
-        Log.d("SOLICITA>>>>>>>>>>>>>>>", req.getDescription());
+    private void addRequest(RequestReq request){
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Adicionando solicitação...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(getApplicationContext());
+        RequestInterface req = globalRetrofit.getRetrofit().create(RequestInterface.class);
+
+        Call<Message> add = req.addRequest(request);
+
+        add.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                if(dialog.isShowing()) dialog.dismiss();
+                if(response.code() == 201){
+                    Notification.notify(getApplicationContext(), "Solicitação adicionada",0);
+                    Intent i = new Intent(NovaSolicitacaoActivity.this, HomeActivity.class);
+                    startActivity(i);
+                } else {
+                    Notification.notify(getApplicationContext(), "Ocorreu um error, tente novamente",0);
+                }
+                Log.d("Nova solica >>>>>>>>>>>>>>>>>", String.valueOf(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if(dialog.isShowing()) dialog.dismiss();
+                Log.d("Nova solica >>>>>>>>>>>>>>>>>", t.getMessage());
+            }
+        });
+
+
     }
 
     private void searchDepartment() {
@@ -185,9 +217,11 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
                         setDeparments_spinners(departments);
                     }
                 }
+                Log.d("Departamentos>>>>>>>>>>>", String.valueOf(response.code()));
             }
             @Override
             public void onFailure(Call<List<Department>> call, Throwable t) {
+                Log.d("Departamentos>>>>>>>>>>>", t.getMessage());
             }
         });
     }
@@ -216,10 +250,12 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
     }
 
     private void searchEquipmentsBySector(int sector_id){
+
         dialog = new ProgressDialog(this);
         dialog.setMessage("Buscando equipamentos...");
         dialog.setCancelable(false);
         dialog.show();
+
         Gson gson = new GsonBuilder().registerTypeAdapter(Equipment.class, new EquipmentDes()).create();
         HttpGlobalRetrofit globalRetrofit = new HttpGlobalRetrofit(getApplicationContext(), gson);
         EquipmentInterface req = globalRetrofit.getRetrofit().create(EquipmentInterface.class);
@@ -233,9 +269,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
                     if(equipments != null && equipments.size() > 0) {
                         setEquipments_spinners(equipments);
                     }
-                    Log.d("Quantidade de equipamentos>>>>>>>>>>>>>>>", String.valueOf(equipments.size()));
                 }
-                Log.d("Lista de equipamentos>>>>>>>>>>>>>>>", String.valueOf(response.code()));
             }
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
@@ -244,7 +278,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         });
     }
 
-    public void setDeparments_spinners(List<Department> departments) {
+    private void setDeparments_spinners(List<Department> departments) {
         List<String> department_name = new ArrayList<>();
 
         for (Department department: departments) {
@@ -256,7 +290,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.departments_spinners.setAdapter(adapterOpcoes);
     }
 
-    public void setSectors_spinners(List<Sector> sectors) {
+    private void setSectors_spinners(List<Sector> sectors) {
         List<String> sector_name = new ArrayList<>();
 
         for (Sector sector: sectors) {
@@ -268,7 +302,7 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.sector_spinners.setAdapter(adapterOpcoes);
     }
 
-    public void setEquipments_spinners(List<Equipment> equipments) {
+    private void setEquipments_spinners(List<Equipment> equipments) {
         List<String> equipments_name = new ArrayList<>();
         for (Equipment equipment: equipments) {
             equipments_name.add(equipment.getDescription());
@@ -278,13 +312,8 @@ public class NovaSolicitacaoActivity extends AppCompatActivity {
         this.equipments_spinners.setAdapter(adapterOpcoes);
     }
 
-    private int getDepartmentSelect() {
-        return 1;
-    }
+    private void progressShow(String msg){
 
-    private int getEquipmentSelect() {
-        return 2;
     }
-
 
 }

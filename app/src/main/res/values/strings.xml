@@ -16,8 +16,8 @@
     <string name="title_activity_home"></string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">IFIX Aplicativo</string>
+    <string name="nav_header_subtitle">ifix.com.br</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="text_title_solicitacao">Dados da solicitação</string>
@@ -25,8 +25,8 @@
     <!-- STRINGS RELACIONADAS AOS CARDS -->
 
     <string name="text_status">Em aberto</string>
-    <string name="text_departamento">Departamento</string>
-    <string name="text_setor">Setor</string>
+    <string name="text_departamento">Departamento: </string>
+    <string name="text_setor">Setor: </string>
     <string name="text_equipmento">Equipamento</string>
     <string name="text_atendente">Saymon</string>
 

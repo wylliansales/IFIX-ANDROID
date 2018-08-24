@@ -97,14 +97,14 @@ public class HomeActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.frame_home, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_abertos) {
-            Toast.makeText(getApplicationContext(),
-                    "Carregar fragmento de Solicitações Abertas", Toast.LENGTH_SHORT).show();
+            fragment = new AbertosFragment();
+            getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.frame_home, fragment).addToBackStack(null).commit();
         } else if (id == R.id.nav_em_andamento) {
             Toast.makeText(getApplicationContext(),
                     "Carregar fragmento de Solicitações em andamento", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_concluidos) {
-            Toast.makeText(getApplicationContext(),
-                    "Carregar fragmento de Solicitações Concluídas", Toast.LENGTH_SHORT).show();
+            fragment = new ConcluidosFragment();
+            getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.frame_home, fragment).addToBackStack(null).commit();
         } else if (id == R.id.nav_edit_perfil) {
 
         } else if (id == R.id.nav_logout) {

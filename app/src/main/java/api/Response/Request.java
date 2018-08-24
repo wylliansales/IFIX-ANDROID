@@ -7,7 +7,7 @@ public class Request {
     private int id;
     private String subject_matter;
     private String department;
-    private String user;
+    private String description;
     private Boolean finalized;
     private Date created_at;
 
@@ -27,21 +27,6 @@ public class Request {
         this.subject_matter = subject_matter;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     public Boolean getFinalized() {
         return finalized;
@@ -57,5 +42,22 @@ public class Request {
 
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

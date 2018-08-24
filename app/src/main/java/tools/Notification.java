@@ -1,7 +1,10 @@
 package tools;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 public class Notification {
@@ -14,5 +17,4 @@ public class Notification {
             }
         }, SPLASH_TIME_OUT);
     }
-
 }

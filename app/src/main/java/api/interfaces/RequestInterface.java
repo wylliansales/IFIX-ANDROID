@@ -1,6 +1,8 @@
 package api.interfaces;
 
 import java.util.List;
+
+import api.Response.Message;
 import api.Response.Request;
 import api.Response.Status;
 import api.requests.RequestReq;
@@ -13,7 +15,7 @@ import retrofit2.http.Path;
 public interface RequestInterface {
 
     @POST("requests")
-    Call<Request> addRequest(@Body RequestReq request);
+    Call<Message> addRequest(@Body RequestReq request);
 
     @GET("requests/user")
     Call<List<Request>> getRequests();
