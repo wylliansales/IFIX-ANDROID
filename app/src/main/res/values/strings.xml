@@ -2,7 +2,7 @@
     <string name="app_name">IFIX</string>
     <string name="title_activity_login">Login</string>
 
-    <!-- Strings related to login -->
+    <!-- STRINGS RELACIONADAS AO LOGIN -->
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Senha</string>
     <string name="action_sign_in">Entrar</string>
@@ -21,11 +21,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="text_title_solicitacao">Dados da solicitação</string>
-    <string name="text_departamento">Departamento</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_equipment">Equipamento</string>
+    <!-- STRINGS RELACIONADAS AOS CARDS -->
+
+    <string name="text_status">Em aberto</string>
+    <string name="text_departamento">Departamento</string>
+    <string name="text_setor">Setor</string>
+    <string name="text_equipmento">Equipamento</string>
+    <string name="text_atendente">Saymon</string>
+
+
     <string name="text_subject_matter">Assunto</string>
     <string name="button_save">Salvar</string>
     <string name="text_description">Descrição</string>
@@ -33,7 +38,9 @@
     <string name="user_name">Nome</string>
     <string name="user_password_confirmation">Confirme a senha</string>
     <string name="action_login">Login</string>
-    <string name="text_setor">Setor</string>
+
+    <!-- STRINGS AOS FRAGMENTOS -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="departments_array">
         <item>Mercury</item>

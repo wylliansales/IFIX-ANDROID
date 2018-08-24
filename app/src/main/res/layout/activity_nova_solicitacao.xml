@@ -111,7 +111,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_equipment"
+                        android:text="@string/text_equipmento"
                         android:layout_marginTop="18dp"
                         android:layout_marginLeft="18dp"
                         android:layout_marginRight="18dp"
@@ -178,7 +178,7 @@
                         android:id="@+id/request_notify"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="   Notificar quando sofrer alterações"
+                        android:text="Receber notificações sobre alterações"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"/>
 
@@ -186,7 +186,7 @@
                         android:id="@+id/request_save"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Adicionar Solicitação"
+                        android:text="Enviar Solicitação"
                         android:textAllCaps="false"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="18dp"
