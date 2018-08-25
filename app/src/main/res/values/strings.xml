@@ -28,12 +28,12 @@
     <string name="text_departamento">Departamento: </string>
     <string name="text_setor">Setor: </string>
     <string name="text_equipmento">Equipamento</string>
-    <string name="text_atendente">Saymon</string>
+    <string name="text_atendente">Atendente: </string>
 
 
     <string name="text_subject_matter">Assunto</string>
     <string name="button_save">Salvar</string>
-    <string name="text_description">Descrição</string>
+    <string name="text_description">Descrição: </string>
     <string name="text_usuario">Dados do usuário</string>
     <string name="user_name">Nome</string>
     <string name="user_password_confirmation">Confirme a senha</string>
@@ -41,6 +41,7 @@
 
     <!-- STRINGS AOS FRAGMENTOS -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_motivo">Motivo</string>
 
     <string-array name="departments_array">
         <item>Mercury</item>

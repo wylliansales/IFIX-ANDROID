@@ -4,6 +4,7 @@ import java.util.List;
 
 import api.Response.Message;
 import api.Response.Request;
+import api.Response.ResponseGlobal;
 import api.Response.Status;
 import api.requests.RequestReq;
 import retrofit2.Call;
@@ -16,6 +17,9 @@ public interface RequestInterface {
 
     @POST("requests")
     Call<Message> addRequest(@Body RequestReq request);
+
+    @GET("requests/all")
+    Call<ResponseGlobal> getRequestAll();
 
     @GET("requests/user")
     Call<List<Request>> getRequests();

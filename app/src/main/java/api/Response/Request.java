@@ -8,8 +8,8 @@ public class Request {
     private String subject_matter;
     private String department;
     private String description;
-    private Boolean finalized;
-    private Date created_at;
+    private boolean finalized;
+    private String created_at;
 
     public int getId() {
         return id;
@@ -28,23 +28,6 @@ public class Request {
     }
 
 
-    public Boolean getFinalized() {
-        return finalized;
-    }
-
-    public void setFinalized(Boolean finalized) {
-        this.finalized = finalized;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-
     public String getDescription() {
         return description;
     }
@@ -59,5 +42,22 @@ public class Request {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public boolean isFinalized() {
+        return finalized;
+    }
+
+    public void setFinalized(boolean finalized) {
+        this.finalized = finalized;
     }
 }
