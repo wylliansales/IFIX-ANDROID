@@ -25,10 +25,10 @@ public interface RequestInterface {
     Call<List<Request>> getRequests();
 
     @GET("requests/open")
-    Call<List<Request>> getRequestOpen();
+    Call<ResponseGlobal> getRequestOpen();
 
     @GET("requests/closed")
-    Call<List<Request>> getRequestClosed();
+    Call<ResponseGlobal> getRequestClosed();
 
     @GET("requests/news")
     Call<List<Request>> getRequestNotStart();

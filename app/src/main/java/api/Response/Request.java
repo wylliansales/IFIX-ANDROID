@@ -53,6 +53,7 @@ public class Request {
         this.created_at = created_at;
     }
 
+
     public boolean isFinalized() {
         return finalized;
     }
